@@ -3,7 +3,7 @@ Contributors: dominik.schwind
 Tags: noserub, hcard, lifestream, openid
 Requires at least: 2.3.3
 Tested up to: 2.6.2
-Stable tag: 0.1.1
+Stable tag: 0.1.2
 
 Gets the data from your NoseRub account and lets you use it on your weblog. Supernifty.
 
