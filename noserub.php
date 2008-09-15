@@ -3,7 +3,7 @@
 Plugin Name: NoseRub for WordPress
 Plugin URI: http://noserub.com/
 Description: Gets the data from your NoseRub account and lets you use it on your weblog. Supernifty.<br />We advise you to install the <a href="http://wordpress.org/extend/plugins/simplepie-core">SimplePie Core</a> plugin, too. If you don't, NoseRub will still work, though.
-Version: 0.1
+Version: 0.1.1
 Author: Dominik Schwind
 Author URI: http://identoo.com/dominik
 */
@@ -161,7 +161,7 @@ function widget_NoseRub_accounts($args){
 			$f .= "<li><a href='".$account["url"]."' rel='me'>";
 			$f .= "<img src='";
 			if($account["icon"] != "rss.gif"){
-				$f .= get_option('home')."/wp-content/plugins/noserub/icons/".$account["icon"];
+				$f .= get_option('home')."/wp-content/plugins/noserub-for-wordpress/icons/".$account["icon"];
 			} else {
 				$f .= "http://www.google.com/s2/favicons?domain=".$pu["host"];
 			}

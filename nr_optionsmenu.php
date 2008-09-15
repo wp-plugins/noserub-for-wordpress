@@ -204,7 +204,7 @@ function nr_print_NoseRub_accounts(){
 			$f .= "<li><a href='".$account["url"]."' rel='me'>";
 			$f .= "<img src='";
 			if($account["icon"] != "rss.gif"){
-				$f .= get_option('home')."/wp-content/plugins/noserub/icons/".$account["icon"];
+				$f .= get_option('home')."/wp-content/plugins/noserub-for-wordpress/icons/".$account["icon"];
 			} else {
 				$f .= "http://www.google.com/s2/favicons?domain=".$pu["host"];
 			}
