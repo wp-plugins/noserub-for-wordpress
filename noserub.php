@@ -329,5 +329,5 @@ add_action('widgets_init','nr_init');
 add_action('wp_head', 'nr_openid_header');
 
 register_activation_hook(__FILE__,"nr_set_NoseRub_options");
-register_deactivation_hook(__FILE__,"nr_unset_NoseRub_options");
+// register_deactivation_hook(__FILE__,"nr_unset_NoseRub_options");
 ?>
