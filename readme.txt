@@ -27,5 +27,7 @@ You can also choose to use your weblog as an OpenID-URL, powered by your NoseRub
 == Release Notes ==
 
 **0.1.3**
+
 *Now*: Release Notes!
+
 *Adding* some new service icons
