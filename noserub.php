@@ -3,7 +3,7 @@
 Plugin Name: NoseRub for WordPress
 Plugin URI: http://wp_plugin.noserub.com/
 Description: Gets the data from your NoseRub account and lets you use it on your weblog. Supernifty.<br />We advise you to install the <a href="http://wordpress.org/extend/plugins/simplepie-core">SimplePie Core</a> plugin, too. If you don't, NoseRub will still work, though.
-Version: 0.1.4
+Version: 0.1.5
 Author: Dominik Schwind
 Author URI: http://identoo.com/dominik
 */
@@ -21,7 +21,7 @@ function the_NoseRub_lifestream(){
 	$nr_feed_url = get_option("nr_feed");
 	if($nr_feed_url != ""){
 		$urlex = explode("/",$nr_url);
-		$nr_domain = $urlex["2"];
+		$nr_domain = implode('/', array_slice($urlex, 2, -1));
 		if(substr($nr_feed_url,0,7) != "http://"){
 			$nr_feed = "http://".$nr_domain.$nr_feed_url;
 		} else {
@@ -58,7 +58,7 @@ function widget_NoseRub_lifestream($args){
 	$nr_feed_url = get_option("nr_feed");
 	if($nr_feed_url != ""){
 		$urlex = explode("/",$nr_url);
-		$nr_domain = $urlex["2"];
+		$nr_domain = implode('/', array_slice($urlex, 2, -1));
 		if(substr($nr_feed_url,0,7) != "http://"){
 			$nr_feed = "http://".$nr_domain.$nr_feed_url;
 		} else {
@@ -187,8 +187,8 @@ function nr_update_locations($cached = true){
 	$nr_apikey = get_option("nr_apikey");
 	$nr_url = get_option("nr_url");
 	$urlex = explode("/",$nr_url);
-	$nr_domain = $urlex["2"];
-	$nr_user = $urlex["3"];
+	$nr_domain = implode('/', array_slice($urlex, 2, -1));
+	$nr_user = implode('/', array_slice($urlex, -1));
 	$locations = "http://".$nr_domain."/api/".$nr_user."/".$nr_apikey."/sphp/locations";
 	nr_apicall($locations,"locations",$cached);
 }
@@ -197,8 +197,8 @@ function nr_update_vcard($cached = true){
 	$nr_apikey = get_option("nr_apikey");
 	$nr_url = get_option("nr_url");
 	$urlex = explode("/",$nr_url);
-	$nr_domain = $urlex["2"];
-	$nr_user = $urlex["3"];
+	$nr_domain = implode('/', array_slice($urlex, 2, -1));
+	$nr_user = implode('/', array_slice($urlex, -1));
 	$vcard = "http://".$nr_domain."/api/".$nr_user."/".$nr_apikey."/sphp/vcard";
 	nr_apicall($vcard,"vcard",$cached);
 }
@@ -207,8 +207,8 @@ function nr_update_contacts($cached = true){
 	$nr_apikey = get_option("nr_apikey");
 	$nr_url = get_option("nr_url");
 	$urlex = explode("/",$nr_url);
-	$nr_domain = $urlex["2"];
-	$nr_user = $urlex["3"];
+	$nr_domain = implode('/', array_slice($urlex, 2, -1));
+	$nr_user = implode('/', array_slice($urlex, -1));
 	$contacts = "http://".$nr_domain."/api/".$nr_user."/".$nr_apikey."/sphp/contacts";
 	nr_apicall($contacts,"contacts",$cached);
 }
@@ -217,8 +217,8 @@ function nr_update_accounts($cached = true){
 	$nr_apikey = get_option("nr_apikey");
 	$nr_url = get_option("nr_url");
 	$urlex = explode("/",$nr_url);
-	$nr_domain = $urlex["2"];
-	$nr_user = $urlex["3"];
+	$nr_domain = implode('/', array_slice($urlex, 2, -1));
+	$nr_user = implode('/', array_slice($urlex, -1));
 	$url = "http://".$nr_domain."/api/".$nr_user."/".$nr_apikey."/sphp/accounts";
 	nr_apicall($url,"accounts",$cached);
 }
@@ -227,8 +227,8 @@ function nr_set_location($id){
 	$nr_apikey = get_option("nr_apikey");
 	$nr_url = get_option("nr_url");
 	$urlex = explode("/",$nr_url);
-	$nr_domain = $urlex["2"];
-	$nr_user = $urlex["3"];
+	$nr_domain = implode('/', array_slice($urlex, 2, -1));
+	$nr_user = implode('/', array_slice($urlex, -1));
 	$locations = "http://".$nr_domain."/api/".$nr_user."/".$nr_apikey."/sphp/locations/set/$id";
 	nr_apicall($locations,"setlocation",false);
 }
@@ -237,8 +237,8 @@ function nr_update_feeds(){
 	$nr_apikey = get_option("nr_apikey");
 	$nr_url = get_option("nr_url");
 	$urlex = explode("/",$nr_url);
-	$nr_domain = $urlex["2"];
-	$nr_user = $urlex["3"];
+	$nr_domain = implode('/', array_slice($urlex, 2, -1));
+	$nr_user = implode('/', array_slice($urlex, -1));
 	$locations = "http://".$nr_domain."/api/".$nr_user."/".$nr_apikey."/sphp/feeds";
 	nr_apicall($locations,"feeds",false);
 }
