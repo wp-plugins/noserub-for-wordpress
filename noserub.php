@@ -20,10 +20,9 @@ function the_NoseRub_lifestream(){
 	$nr_url = get_option("nr_url");
 	$nr_feed_url = get_option("nr_feed");
 	if($nr_feed_url != ""){
-		$urlex = explode("/",$nr_url);
-		$nr_domain = implode('/', array_slice($urlex, 2, -1));
+		$nrc = new NoseRub_ApiClass;
 		if(substr($nr_feed_url,0,7) != "http://"){
-			$nr_feed = "http://".$nr_domain.$nr_feed_url;
+			$nr_feed = "http://".$nrc->getDomain().$nr_feed_url;
 		} else {
 			$nr_feed = $nr_feed_url;
 		}
@@ -34,11 +33,8 @@ function the_NoseRub_lifestream(){
 		$feed->handle_content_type();
 		foreach($feed->get_items() as $item){ ?>
 			<h3 class="title"><a href="<?php echo $item->get_permalink(); ?>"><?php echo $item->get_title(); ?></a></h3>
-
 			<?php echo $item->get_content(); ?>
-
 			<p class="footnote"><?php echo $item->get_date(); ?></p>
-
 			<?php
 		}
 	}
@@ -57,10 +53,9 @@ function widget_NoseRub_lifestream($args){
 	$nr_url = get_option("nr_url");
 	$nr_feed_url = get_option("nr_feed");
 	if($nr_feed_url != ""){
-		$urlex = explode("/",$nr_url);
-		$nr_domain = implode('/', array_slice($urlex, 2, -1));
+		$nrc = new NoseRub_ApiClass;
 		if(substr($nr_feed_url,0,7) != "http://"){
-			$nr_feed = "http://".$nr_domain.$nr_feed_url;
+			$nr_feed = "http://".$nrc->getDomain().$nr_feed_url;
 		} else {
 			$nr_feed = $nr_feed_url;
 		}
@@ -184,63 +179,39 @@ function widget_NoseRub_accounts($args){
 }
 
 function nr_update_locations($cached = true){
-	$nr_apikey = get_option("nr_apikey");
-	$nr_url = get_option("nr_url");
-	$urlex = explode("/",$nr_url);
-	$nr_domain = implode('/', array_slice($urlex, 2, -1));
-	$nr_user = implode('/', array_slice($urlex, -1));
-	$locations = "http://".$nr_domain."/api/".$nr_user."/".$nr_apikey."/sphp/locations";
+	$nrc = new NoseRub_ApiClass;
+	$locations = "http://".$nrc->getDomain()."/api/".$nrc->getUser()."/".$nrc->getKey()."/sphp/locations";
 	nr_apicall($locations,"locations",$cached);
 }
 
 function nr_update_vcard($cached = true){
-	$nr_apikey = get_option("nr_apikey");
-	$nr_url = get_option("nr_url");
-	$urlex = explode("/",$nr_url);
-	$nr_domain = implode('/', array_slice($urlex, 2, -1));
-	$nr_user = implode('/', array_slice($urlex, -1));
-	$vcard = "http://".$nr_domain."/api/".$nr_user."/".$nr_apikey."/sphp/vcard";
+	$nrc = new NoseRub_ApiClass;
+	$vcard = "http://".$nrc->getDomain()."/api/".$nrc->getUser()."/".$nrc->getKey()."/sphp/vcard";
 	nr_apicall($vcard,"vcard",$cached);
 }
 
 function nr_update_contacts($cached = true){
-	$nr_apikey = get_option("nr_apikey");
-	$nr_url = get_option("nr_url");
-	$urlex = explode("/",$nr_url);
-	$nr_domain = implode('/', array_slice($urlex, 2, -1));
-	$nr_user = implode('/', array_slice($urlex, -1));
-	$contacts = "http://".$nr_domain."/api/".$nr_user."/".$nr_apikey."/sphp/contacts";
+	$nrc = new NoseRub_ApiClass;
+	$contacts = "http://".$nrc->getDomain()."/api/".$nrc->getUser()."/".$nrc->getKey()."/sphp/contacts";
 	nr_apicall($contacts,"contacts",$cached);
 }
 
 function nr_update_accounts($cached = true){
-	$nr_apikey = get_option("nr_apikey");
-	$nr_url = get_option("nr_url");
-	$urlex = explode("/",$nr_url);
-	$nr_domain = implode('/', array_slice($urlex, 2, -1));
-	$nr_user = implode('/', array_slice($urlex, -1));
-	$url = "http://".$nr_domain."/api/".$nr_user."/".$nr_apikey."/sphp/accounts";
+	$nrc = new NoseRub_ApiClass;
+	$url = "http://".$nrc->getDomain()."/api/".$nrc->getUser()."/".$nrc->getKey()."/sphp/accounts";
 	nr_apicall($url,"accounts",$cached);
 }
 
 function nr_set_location($id){
-	$nr_apikey = get_option("nr_apikey");
-	$nr_url = get_option("nr_url");
-	$urlex = explode("/",$nr_url);
-	$nr_domain = implode('/', array_slice($urlex, 2, -1));
-	$nr_user = implode('/', array_slice($urlex, -1));
-	$locations = "http://".$nr_domain."/api/".$nr_user."/".$nr_apikey."/sphp/locations/set/$id";
+	$nrc = new NoseRub_ApiClass;
+	$locations = "http://".$nrc->getDomain()."/api/".$nrc->getUser()."/".$nrc->getKey()."/sphp/locations/set/$id";
 	nr_apicall($locations,"setlocation",false);
 }
 
 function nr_update_feeds(){
-	$nr_apikey = get_option("nr_apikey");
-	$nr_url = get_option("nr_url");
-	$urlex = explode("/",$nr_url);
-	$nr_domain = implode('/', array_slice($urlex, 2, -1));
-	$nr_user = implode('/', array_slice($urlex, -1));
-	$locations = "http://".$nr_domain."/api/".$nr_user."/".$nr_apikey."/sphp/feeds";
-	nr_apicall($locations,"feeds",false);
+	$nrc = new NoseRub_ApiClass;
+	$feeds = "http://".$nrc->getDomain()."/api/".$nrc->getUser()."/".$nrc->getKey()."/sphp/feeds";
+	nr_apicall($feeds,"feeds",false);
 }
 
 /**
@@ -321,6 +292,40 @@ function nr_openid_header(){
 	<link href="<?php echo $nr_url; ?>" rel="openid2.local_id openid.delegate" />
 		<?php
 		print("\n");
+	}
+}
+
+class NoseRub_ApiClass {
+	var $url;
+	var $domain;
+	var $user;
+	var $key;
+
+	var $urlex;
+	
+	function NoseRub_ApiClass(){
+		$this->url = get_option("nr_url");
+		$this->key = get_option("nr_apikey");
+		$this->urlex = explode("/",trim($this->url));
+		if(isset($this->urlex[4]) && ($this->urlex[4] != "")){
+			$this->domain = implode("/",array_slice($this->urlex, 2, -1));
+			$this->user = $this->urlex[4];
+		} else {
+			$this->domain = $this->urlex[2];
+			$this->user = $this->urlex[3];
+		}
+	}
+	
+	function getDomain(){
+		return $this->domain;
+	}
+	
+	function getUser(){
+		return $this->user;
+	}
+	
+	function getKey(){
+		return $this->key;
 	}
 }
 
